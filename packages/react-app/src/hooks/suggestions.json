@@ -1,0 +1,119 @@
+[
+    {
+        "category": "long_term_bond",
+        "target_sum_of_this_category": 27935.24356017824,
+        "investment_shift_of_this_category": -0.27451733292766456,
+        "sum_of_this_category_in_the_portfolio": 8763.472168116126,
+        "suggestions_for_positions": [
+            {
+                "symbol": "radiant:RDNT-ETH",
+                "balanceUSD": 4454.344698601327,
+                "difference": 9744.730926826953
+            },
+            {
+                "symbol": "Mute.Switch:Mute.Switch-USDC-ETH",
+                "balanceUSD": 2645.01,
+                "difference": 5786.46523625797
+            },
+            {
+                "symbol": "osmosis:osmo/weth",
+                "balanceUSD": 1184.0047731377476,
+                "difference": 2590.2368835373327
+            }
+        ]
+    },
+    {
+        "category": "intermediate_term_bond",
+        "target_sum_of_this_category": 10475.71633506684,
+        "investment_shift_of_this_category": -0.11212655179752262,
+        "sum_of_this_category_in_the_portfolio": 2645.01,
+        "suggestions_for_positions": [
+            {
+                "symbol": "Mute.Switch:Mute.Switch-USDC-ETH",
+                "balanceUSD": 2645.01,
+                "difference": 7830.7063350668395
+            }
+        ]
+    },
+    {
+        "category": "commodities",
+        "target_sum_of_this_category": 5237.85816753342,
+        "investment_shift_of_this_category": 0.12190945672482319,
+        "sum_of_this_category_in_the_portfolio": 13751.784082275783,
+        "suggestions_for_positions": [
+            {
+                "symbol": "radiant:RDNT-ETH",
+                "balanceUSD": 10615.834433075783,
+                "difference": -6572.414702385351
+            },
+            {
+                "symbol": "binance:FIL-stake",
+                "balanceUSD": 2988.43,
+                "difference": -1850.1796908072824
+            }
+        ]
+    },
+    {
+        "category": "gold",
+        "target_sum_of_this_category": 5237.85816753342,
+        "investment_shift_of_this_category": -0.075,
+        "sum_of_this_category_in_the_portfolio": 0,
+        "suggestions_for_positions": []
+    },
+    {
+        "category": "large_cap_us_stocks",
+        "target_sum_of_this_category": 12570.859602080207,
+        "investment_shift_of_this_category": 0.22713034294804157,
+        "sum_of_this_category_in_the_portfolio": 28433.21322748109,
+        "suggestions_for_positions": [
+            {
+                "symbol": "radiant:RDNT-ETH",
+                "balanceUSD": 28433.21322748109,
+                "difference": -15862.353625400883
+            }
+        ]
+    },
+    {
+        "category": "small_cap_us_stocks",
+        "target_sum_of_this_category": 2095.143267013368,
+        "investment_shift_of_this_category": -0.02312534798069269,
+        "sum_of_this_category_in_the_portfolio": 480.1126963770522,
+        "suggestions_for_positions": []
+    },
+    {
+        "category": "non_us_developed_market_stocks",
+        "target_sum_of_this_category": 4190.286534026736,
+        "investment_shift_of_this_category": 0.03826707919753697,
+        "sum_of_this_category_in_the_portfolio": 6862.7869783262995,
+        "suggestions_for_positions": [
+            {
+                "symbol": "osmosis:osmo/kava",
+                "balanceUSD": 6862.7869783262995,
+                "difference": -2672.5004442995632
+            }
+        ]
+    },
+    {
+        "category": "non_us_emerging_market_stocks",
+        "target_sum_of_this_category": 2095.143267013368,
+        "investment_shift_of_this_category": 0.09746235383547819,
+        "sum_of_this_category_in_the_portfolio": 8901.729747869256,
+        "suggestions_for_positions": [
+            {
+                "symbol": "osmosis:osmo/kava",
+                "balanceUSD": 6862.7869783262995,
+                "difference": -5247.536646329976
+            },
+            {
+                "symbol": "osmosis:osmo/weth",
+                "balanceUSD": 1184.0047731377476,
+                "difference": -905.3331330393701
+            },
+            {
+                "symbol": "osmosis:osmo/atom",
+                "balanceUSD": 707.4183472052091,
+                "difference": -540.917809771629
+            }
+        ]
+    }
+]

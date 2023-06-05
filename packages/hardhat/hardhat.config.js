@@ -7,6 +7,8 @@ require("@nomicfoundation/hardhat-chai-matchers");
 require("@tenderly/hardhat-tenderly");
 require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-deploy");
+require("@nomiclabs/hardhat-ethers");
+
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
@@ -60,6 +62,12 @@ module.exports = {
   // Follow the directions, and uncomment the network you wish to deploy to.
 
   networks: {
+    hardhat: {
+      forking: {
+        url: "https://arb-mainnet.g.alchemy.com/v2/WIcMNRX1L9IpsIwW_o_IUIdhOWwAnFiO",
+        blockNumber: 86630670,
+      }
+    },
     localhost: {
       url: "http://127.0.0.1:8545/",
       /*
@@ -269,6 +277,13 @@ module.exports = {
     devnetArbitrum: {
       url: "https://nitro-devnet.arbitrum.io/rpc",
       chainId: 421612,
+      accounts: {
+        mnemonic: mnemonic(),
+      },
+    },
+    bsc: {
+      url: "https://bsc-dataseed1.binance.org/",
+      chainId: 56,
       accounts: {
         mnemonic: mnemonic(),
       },

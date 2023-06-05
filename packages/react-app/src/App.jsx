@@ -1,6 +1,7 @@
 import { Button, Col, Menu, Row } from "antd";
 
 import "antd/dist/antd.css";
+import "semantic-ui-css/semantic.min.css";
 import {
   useBalance,
   useContractLoader,
@@ -29,7 +30,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { getRPCPollTime, Transactor, Web3ModalSetup } from "./helpers";
-import { Home, ExampleUI, Hints, Subgraph } from "./views";
+import { ExampleUI, WipUI } from "./views";
 import { useStaticJsonRPC, useGasPrice } from "./hooks";
 
 const { ethers } = require("ethers");
@@ -53,7 +54,7 @@ const { ethers } = require("ethers");
 */
 
 /// 📡 What chain are your contracts deployed to?
-const initialNetwork = NETWORKS.localhost; // <------- select your target frontend network (localhost, goerli, xdai, mainnet)
+const initialNetwork = NETWORKS.arbitrum; // <------- select your target frontend network (localhost, goerli, xdai, mainnet)
 
 // 😬 Sorry for all the console logging
 const DEBUG = true;
@@ -77,6 +78,7 @@ function App(props) {
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
+  const [addresses, setAddresses] = useState(new Set());
   const [selectedNetwork, setSelectedNetwork] = useState(networkOptions[0]);
   const location = useLocation();
 
@@ -125,6 +127,10 @@ function App(props) {
       if (userSigner) {
         const newAddress = await userSigner.getAddress();
         setAddress(newAddress);
+
+        const newAddresses = new Set(addresses); // create a copy of the current set
+        newAddresses.add(newAddress); // add the new value to the copy
+        setAddresses(newAddresses);
       }
     }
     getAddress();
@@ -167,11 +173,11 @@ function App(props) {
   // });
 
   // Then read your DAI balance like:
-  const myMainnetDAIBalance = useContractReader(
-    mainnetContracts,
-    "DAI",
+  const pendleGllpMarketBalance = useContractReader(
+    readContracts,
+    "PendleGlpMarket",
     "balanceOf",
-    ["0x34aA3F359A9D614239015126635CE7732c18fDF3"],
+    [address],
     mainnetProviderPollingTime,
   );
 
@@ -207,7 +213,7 @@ function App(props) {
       console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
       console.log("📝 readContracts", readContracts);
       console.log("🌍 DAI contract on mainnet:", mainnetContracts);
-      console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
+      console.log("💵 pendleGllpMarketBalance", pendleGllpMarketBalance);
       console.log("🔐 writeContracts", writeContracts);
     }
   }, [
@@ -220,7 +226,7 @@ function App(props) {
     writeContracts,
     mainnetContracts,
     localChainId,
-    myMainnetDAIBalance,
+    pendleGllpMarketBalance,
   ]);
 
   const loadWeb3Modal = useCallback(async () => {
@@ -280,6 +286,7 @@ function App(props) {
             <Account
               useBurner={USE_BURNER_WALLET}
               address={address}
+              addresses={Array.from(addresses)}
               localProvider={localProvider}
               userSigner={userSigner}
               mainnetProvider={mainnetProvider}
@@ -304,59 +311,22 @@ function App(props) {
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
       <Menu style={{ textAlign: "center", marginTop: 20 }} selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/">
-          <Link to="/">App Home</Link>
-        </Menu.Item>
-        <Menu.Item key="/debug">
-          <Link to="/debug">Debug Contracts</Link>
-        </Menu.Item>
-        <Menu.Item key="/hints">
-          <Link to="/hints">Hints</Link>
-        </Menu.Item>
         <Menu.Item key="/exampleui">
-          <Link to="/exampleui">ExampleUI</Link>
+          <Link to="/exampleui">Vault</Link>
         </Menu.Item>
         <Menu.Item key="/mainnetdai">
-          <Link to="/mainnetdai">Mainnet DAI</Link>
+          <Link to="/mainnetdai">(WIP)Mainnet DAI</Link>
         </Menu.Item>
-        <Menu.Item key="/subgraph">
-          <Link to="/subgraph">Subgraph</Link>
+        <Menu.Item key="/wipui">
+          <Link to="/wipui">(WIP)UI</Link>
         </Menu.Item>
       </Menu>
 
       <Switch>
-        <Route exact path="/">
-          {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
-        </Route>
-        <Route exact path="/debug">
-          {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
-          <Contract
-            name="YourContract"
-            price={price}
-            signer={userSigner}
-            provider={localProvider}
-            address={address}
-            blockExplorer={blockExplorer}
-            contractConfig={contractConfig}
-          />
-        </Route>
-        <Route path="/hints">
-          <Hints
-            address={address}
-            yourLocalBalance={yourLocalBalance}
-            mainnetProvider={mainnetProvider}
-            price={price}
-          />
-        </Route>
         <Route path="/exampleui">
           <ExampleUI
             address={address}
+            addresses={addresses}
             userSigner={userSigner}
             mainnetProvider={mainnetProvider}
             localProvider={localProvider}
@@ -390,12 +360,19 @@ function App(props) {
             />
             */}
         </Route>
-        <Route path="/subgraph">
-          <Subgraph
-            subgraphUri={props.subgraphUri}
+        <Route path="/wipui">
+          <WipUI
+            address={address}
+            addresses={addresses}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            localProvider={localProvider}
+            yourLocalBalance={yourLocalBalance}
+            price={price}
             tx={tx}
             writeContracts={writeContracts}
-            mainnetProvider={mainnetProvider}
+            readContracts={readContracts}
+            purpose={purpose}
           />
         </Route>
       </Switch>
